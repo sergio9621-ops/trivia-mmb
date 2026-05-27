@@ -1061,10 +1061,10 @@ async function startTrivia() {
   });
 
   if (!nombre) { showFieldError('nombre'); valid = false; }
-  if (!correo || !correo.endsWith('@porvenir.com.co')) {
-    document.getElementById('correo-err').textContent = 'Debe ser un correo @porvenir.com.co';
-    showFieldError('correo'); valid = false;
-  }
+  if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+  document.getElementById('correo-err').textContent = 'Ingresa un correo válido';
+  showFieldError('correo'); valid = false;
+}
   if (!cedula) { showFieldError('cedula'); valid = false; }
   if (!telefono) { showFieldError('telefono'); valid = false; }
   if (!area) { showFieldError('area'); valid = false; }
