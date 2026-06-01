@@ -39,15 +39,17 @@
     position: relative;
   }
 
-  /* ─── SCENE: fondo limpio (cambia el background por tu imagen) ─── */
+  /* ─── SCENE: fondo con imagen + overlay oscuro ─── */
   .scene {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-  background: url('fondo.jpg') center center / cover no-repeat;
-}
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    background:
+      linear-gradient(rgba(10,22,40,0.55), rgba(10,22,40,0.7)),
+      url('fondo.jpg') center center / cover no-repeat;
+  }
 
   /* Estilos decorativos eliminados (montañas, ciudad, lago, corredores, partículas) */
 
@@ -948,7 +950,7 @@
   <div id="screen-trivia" style="display:none;">
     <div class="card">
       <div class="timer-row">
-        <div class="progress-info" id="q-counter">Pregunta 1 de 15</div>
+        <div class="progress-info" id="q-counter">Pregunta 1 de 10</div>
         <div class="timer-display">
           <span>⏱</span>
           <span id="timer-val">00:00</span>
@@ -970,7 +972,7 @@
     <div class="result-hero">
       <div class="result-score-ring">
         <div class="big-num" id="res-score">0</div>
-        <div class="of-total">de 15</div>
+        <div class="of-total">de 10</div>
       </div>
       <h2 id="res-title">¡BUEN INTENTO!</h2>
       <p id="res-subtitle">Sigue entrenando tu conocimiento.</p>
@@ -1009,21 +1011,16 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwS4Dtl-nVSaR
 
 // ─── DATA ───────────────────────────────────────────────
 const QUESTIONS = [
-  { q: "¿Qué etiqueta internacional obtuvo la Media Maratón de Bogotá por parte de World Athletics?", opts: ["Silver Label","Bronze Label","Gold Label","Platinum Label"], ans: 2 },
-  { q: "¿Aproximadamente a qué altitud sobre el nivel del mar se corre la mmB?", opts: ["2.740 metros","2.540 metros","2.840 metros","2.640 metros"], ans: 3 },
-  { q: "¿Quién ha sido el único colombiano en ganar la Media Maratón de Bogotá en la categoría élite masculina?", opts: ["José Alirio Carrasco","Gerard Giraldo","Jeisson Suárez","Iván González"], ans: 0 },
-  { q: "¿En qué fecha se llevará a cabo la Media Maratón de Bogotá 2026?", opts: ["26 de julio","12 de julio","19 de julio","2 de agosto"], ans: 0 },
-  { q: "¿Qué país ha dominado históricamente las categorías élite de la mmB?", opts: ["Marruecos","Uganda","Kenia","Etiopía"], ans: 2 },
-  { q: "¿Qué atleta posee el récord mundial masculino de maratón en 2026?", opts: ["Kelvin Kiptum","Eliud Kipchoge","Sebastian Sawe","Kenenisa Bekele"], ans: 2 },
-  { q: "¿En qué año se fundó el Equipo Porvenir (atletas élite)?", opts: ["2000","2004","2002","2006"], ans: 1 },
-  { q: "¿Cuántos años lleva Porvenir patrocinando la Media Maratón de Bogotá?", opts: ["28 años","22 años","26 años","24 años"], ans: 2 },
-  { q: "¿Cuál es la distancia exacta oficial de una maratón olímpica?", opts: ["41,950 km","42,500 km","42,195 km","42,000 km"], ans: 2 },
-  { q: "¿Cuál es la atleta colombiana más icónica del Equipo Porvenir, ganadora de múltiples carreras nacionales y representante clave en la mmB?", opts: ["Sandra Arenas","Angie Orjuela","Muriel Coneo","Flor Denis Ruiz"], ans: 1 },
-  { q: "¿Cuál es la prueba más larga del atletismo olímpico en pista?", opts: ["10.000 metros","8.000 metros","12.000 metros","5.000 metros"], ans: 0 },
-  { q: "¿En cuántos Juegos Olímpicos ha participado Angie Orjuela, atleta élite del Equipo Porvenir?", opts: ["2 Juegos Olímpicos","5 Juegos Olímpicos","3 Juegos Olímpicos","4 Juegos Olímpicos"], ans: 2 },
-  { q: "¿Cuál es el nombre de la federación internacional que regula oficialmente el atletismo mundial?", opts: ["Global Track Federation","International Athletics Committee","International Running Union","World Athletics"], ans: 3 },
-  { q: "¿Cómo se le conoce a la feria oficial previa a la carrera, apoyada por Porvenir, donde los corredores reclaman su kit de competencia, número y chip?", opts: ["Expo Running Bogotá","Running Experience Bogotá","Expo Media","Feria Runner Capital"], ans: 2 },
-  { q: "¿Qué avenida principal de Bogotá hace parte tradicional del recorrido de la mmB?", opts: ["Calle 80","Carrera Séptima","Avenida Boyacá","Avenida Caracas"], ans: 1 },
+  { q: "¿Cuántos corredores participaron en la Media Maratón de Bogotá 2025?", opts: ["25.000","35.000","42.000","50.000"], ans: 2 },
+  { q: "¿En qué año Porvenir comenzó a patrocinar la Media Maratón de Bogotá?", opts: ["1995","1998","2000","2004"], ans: 2 },
+  { q: "¿Cómo se llama la plataforma de Responsabilidad Social Deportiva de Porvenir?", opts: ["Atletismo para Todos","Corredores Porvenir","Colombia Corre","La Nación del Atletismo"], ans: 3 },
+  { q: "¿Cuántos años lleva Porvenir patrocinando al equipo élite de atletas colombianos (Equipo Porvenir)?", opts: ["10 años","15 años","18 años","22 años"], ans: 3 },
+  { q: "¿Por qué Porvenir apoya el atletismo (running) como plataforma de su programa de Responsabilidad Social Deportiva?", opts: ["Porque es el deporte más popular en televisión y genera más free press","Porque es un deporte que cualquier persona puede practicar, que promueve hábitos saludables, disciplina, superación personal e inclusión social","Porque Colombia tiene más infraestructura para el atletismo que para otros deportes","Porque la mmB es patrocinada por marcas internacionales que respaldan a Porvenir"], ans: 1 },
+  { q: "¿Qué reconocimiento internacional distingue a la mmB como única carrera en América Latina en obtenerlo?", opts: ["Gold Label de World Athletics","Diamond Label de IAAF","Platinum Label de World Athletics","Elite Race de la World Marathon Majors"], ans: 2 },
+  { q: "¿Cuántos atletas han consolidado su carrera deportiva en el Equipo Porvenir a lo largo de su historia?", opts: ["25","35","47","60"], ans: 2 },
+  { q: "¿En cuántos Juegos Olímpicos ha estado representado el Equipo Porvenir desde su fundación?", opts: ["2","3","4","5"], ans: 3 },
+  { q: "¿Cuál es la misión de La Nación del Atletismo Porvenir?", opts: ["Financiar atletas élite colombianos para competencias internacionales","Organizar la Media Maratón de Bogotá y otras carreras del país","Vender inscripciones a carreras con descuentos para afiliados Porvenir","Inspirar, formar y transformar vidas a través del atletismo, promoviendo hábitos saludables, disciplina, inclusión y desarrollo social"], ans: 3 },
+  { q: "¿Quién ha sido el único atleta colombiano y que perteneció al Equipo Porvenir en ganar la mmB?", opts: ["Angie Orjuela","Muriel Coneo","Jose Alirio Carrasco","Iván González"], ans: 2 },
 ];
 
 const LETTERS = ['A','B','C','D'];
@@ -1042,7 +1039,7 @@ let userAnswers = [];
 function saveStats(score) {
   const s = JSON.parse(localStorage.getItem(STATS_KEY) || '{"total":0,"perfect":0}');
   s.total += 1;
-  if (score === 15) s.perfect += 1;
+  if (score === 10) s.perfect += 1;
   localStorage.setItem(STATS_KEY, JSON.stringify(s));
 }
 
@@ -1062,9 +1059,9 @@ async function startTrivia() {
 
   if (!nombre) { showFieldError('nombre'); valid = false; }
   if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-  document.getElementById('correo-err').textContent = 'Ingresa un correo válido';
-  showFieldError('correo'); valid = false;
-}
+    document.getElementById('correo-err').textContent = 'Ingresa un correo válido';
+    showFieldError('correo'); valid = false;
+  }
   if (!cedula) { showFieldError('cedula'); valid = false; }
   if (!telefono) { showFieldError('telefono'); valid = false; }
   if (!area) { showFieldError('area'); valid = false; }
@@ -1241,9 +1238,9 @@ function showResults() {
   document.getElementById('progress-fill').style.width = '100%';
 
   let title, sub;
-  if (correctCount === 15) { title = '¡PERFECTO! 🏆'; sub = '¡Eres un experto en atletismo y la Media Maratón!'; }
-  else if (correctCount >= 12) { title = '¡EXCELENTE! 🥇'; sub = 'Tienes un gran conocimiento del atletismo.'; }
-  else if (correctCount >= 8) { title = '¡BIEN HECHO! 🥈'; sub = 'Buen intento, sigue aprendiendo sobre el deporte.'; }
+  if (correctCount === 10) { title = '¡PERFECTO! 🏆'; sub = '¡Eres un experto en atletismo y la Media Maratón!'; }
+  else if (correctCount >= 8) { title = '¡EXCELENTE! 🥇'; sub = 'Tienes un gran conocimiento del atletismo.'; }
+  else if (correctCount >= 5) { title = '¡BIEN HECHO! 🥈'; sub = 'Buen intento, sigue aprendiendo sobre el deporte.'; }
   else { title = '¡SIGUE ENTRENANDO! 💪'; sub = 'El conocimiento también se entrena. ¡Vuelve a intentarlo!'; }
   document.getElementById('res-title').textContent = title;
   document.getElementById('res-subtitle').textContent = sub;
